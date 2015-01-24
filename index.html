@@ -40,36 +40,48 @@
 		var listening = false;
 		var nums = [];
 		var hexVal;
-		function getRandom()
+		var diff;
+		var rounds = 0;
+		
+		function getRandom(difficult)
 		{
-    		
+			diff = difficult;
 			var string = "";
             var i;
+			var rand;
 			
-			for (i=0;i < 2;i++)
+			for (i=0;i < diff;i++)
 			{
 				(function (i) {
-					nums.push(Math.floor((Math.random() * 16) + 1));
+					rand = Math.floor((Math.random() * 16) + 1);
+					while (diff == 2 && rand == nums[0])
+					{
+						rand = Math.floor((Math.random() * 16) + 1);
+					}
+					nums.push(rand);
 					string += nums[i] + " ";
-					setTimeout(function () {
-						displayColors(i);
-					}, 2000);
+					displayColors(i);
 				}(i));	
 			}
 			document.getElementById("demo").innerHTML = string;
 			listening = true;
+			
 
 		}
 		
 		function displayColors(x)
 		{
-			x = x;
+			listening = false;
+			console.log("Initial displayColors x: " + x);
+			var newDiff = diff + 1;
+			console.log("Initial displayColors diff: " + diff);
+			console.log("Initial displayColors newDiff: " + newDiff);
 			setColor(nums[x]);
-			if (x <= 3)
+			if (x <= newDiff)
 			{
 				setTimeout(function () {
 						setColor(nums[x]);
-					}, 2000);
+					}, 500);
 			}
 		}
 		
@@ -81,72 +93,57 @@
 			}
 			else 
 			{
-				if (nums.length==0)
-				{
-					alert("You win");
-				}
 				var i;
 				var isThere = false;
-				alert(nums.length);
 				for (i=0;i<nums.length;i++)
 				{
 					if (nums[i]==id)
 					{
 						nums.splice(i, 1);
 						isThere = true;
+						if (nums.length == 0)
+						{
+							rounds = rounds + 1;
+							getRandom(diff);
+						}
 					}
 				}
 				if (!isThere)
 				{
-					alert("You lose.");
+					alert('You lost, you made it ' + rounds + ' rounds.');
+					reload();
 				}
-				
-				/*alert(nums.indexOf(id));
-				if (n == -1)
-				{
-					alert("You lose");
-				}
-				else if(nums.length == 0) 
-				{
-					alert("You win!");
-				}
-				else{
-					nums.splice(id, 1);
-				}
-				var expected = nums.shift();
-				if (id != expected)
-				{
-					alert("You lose");
-				}
-				if (nums.length == 0)
-				{
-					alert("You win!");
-				}*/
 			}
 		}
 		function setColor(btn){
+			console.log(btn);
+			listening = false; 
 			var property=document.getElementById(btn);
+			
 			   if (window.getComputedStyle(property).backgroundColor == 'rgb(241, 196, 15)') {
 					if (btn == 2 || btn == 5 || btn == 12 || btn == 15)
 						{
 							property.style.backgroundColor='rgb(192, 57, 43)';
+							listening = true; 
 						}
 					else if (btn == 1 || btn == 8 || btn == 11 || btn == 14)
 						{
 							property.style.backgroundColor='rgb(41, 128, 185)';
+							listening = true; 
 						}
 					else if (btn == 3 || btn == 6 || btn == 9 || btn == 16)
 						{
 							property.style.backgroundColor='rgb(39, 174, 96)';
+							listening = true; 
 						}
-					else{
+					else if (btn == 4 || btn == 7 || btn == 10 || btn == 13){
 							property.style.backgroundColor='rgb(142, 68, 173)';
+							listening = true; 
 						}
 			   }
 				else {
-						
-						hexVal = window.getComputedStyle(property).backgroundColor;
 						property.style.backgroundColor = "#f1c40f";
+						listening = true; 
 				}
 		}
 		function reload() {
@@ -154,16 +151,26 @@
 		}
 	</script>
 	<div class="row clearfix">
-
-		<div class="col-md-5 column">
-			<button type="button" onclick="getRandom()" class="btn btn-default" id="start" style="width:100%; min-height:50% !important;">Start game</button>
-		</div>
-		<div class="col-md-5 column">
-			<button type="button" onclick="reload()" class="btn btn-default" id="reset" style="width:100%; min-height:50% !important;">Reset</button>
-		</div>
 		<div class="col-md-1 column">
+			</div>
+		<div class="col-md-2 column">
+			<button type="button" onclick="getRandom(2)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Easy</button>
+		</div>
+		<div class="col-md-2 column">
+			<button type="button" onclick="getRandom(3)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Medium</button>
+		</div>
+		<div class="col-md-2 column">
+			<button type="button" onclick="getRandom(4)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Hard</button>
+		</div>
+		<div class="col-md-2 column">
+			<button type="button" onclick="getRandom(6)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Just Stop</button>
+		</div>
+		<div class="col-md-2 column">
+			<button type="button" onclick="reload()" class="btn btn-default" id="reset" style="min-width:100%; min-height:50% !important;">Reset</button>
+		</div>
+
 	</div>
-	</div>
+	<div id="theButtons">
 	<div class="row clearfix">
 		<div class="col-md-3 column">
 			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="1" style="background-color:#2980b9">1</button>
@@ -219,6 +226,7 @@
 		<div class="col-md-3 column">
 			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="16" style="background-color:#27ae60">16</button>
 		</div>
+	</div>
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-12 column">
