@@ -30,201 +30,88 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="js/simon.js"></script>
 
 	</head>
 
 <body style = "background-color:#333;">
 <div class="container">
 	<p id="demo" style="color:#fff;"></p>
-		<script>
-		var listening = false;
-		var nums = [];
-		var hexVal;
-		var diff;
-		var rounds = 0;
-		
-		function getRandom(difficult)
-		{
-			diff = difficult;
-			var string = "";
-            var i;
-			var rand;
-			
-			for (i=0;i < diff;i++)
-			{
-				(function (i) {
-					rand = Math.floor((Math.random() * 16) + 1);
-					while (diff == 2 && rand == nums[0])
-					{
-						rand = Math.floor((Math.random() * 16) + 1);
-					}
-					nums.push(rand);
-					string += nums[i] + " ";
-					displayColors(i);
-				}(i));	
-			}
-			document.getElementById("demo").innerHTML = string;
-			listening = true;
-			
-
-		}
-		
-		function displayColors(x)
-		{
-			listening = false;
-			console.log("Initial displayColors x: " + x);
-			var newDiff = diff + 1;
-			console.log("Initial displayColors diff: " + diff);
-			console.log("Initial displayColors newDiff: " + newDiff);
-			setColor(nums[x]);
-			if (x <= newDiff)
-			{
-				setTimeout(function () {
-						setColor(nums[x]);
-					}, 500);
-			}
-		}
-		
-		function buttonClick(id)
-		{
-			if (!listening)
-			{
-				return;
-			}
-			else 
-			{
-				var i;
-				var isThere = false;
-				for (i=0;i<nums.length;i++)
-				{
-					if (nums[i]==id)
-					{
-						nums.splice(i, 1);
-						isThere = true;
-						if (nums.length == 0)
-						{
-							rounds = rounds + 1;
-							getRandom(diff);
-						}
-					}
-				}
-				if (!isThere)
-				{
-					alert('You lost, you made it ' + rounds + ' rounds.');
-					reload();
-				}
-			}
-		}
-		function setColor(btn){
-			console.log(btn);
-			listening = false; 
-			var property=document.getElementById(btn);
-			
-			   if (window.getComputedStyle(property).backgroundColor == 'rgb(241, 196, 15)') {
-					if (btn == 2 || btn == 5 || btn == 12 || btn == 15)
-						{
-							property.style.backgroundColor='rgb(192, 57, 43)';
-							listening = true; 
-						}
-					else if (btn == 1 || btn == 8 || btn == 11 || btn == 14)
-						{
-							property.style.backgroundColor='rgb(41, 128, 185)';
-							listening = true; 
-						}
-					else if (btn == 3 || btn == 6 || btn == 9 || btn == 16)
-						{
-							property.style.backgroundColor='rgb(39, 174, 96)';
-							listening = true; 
-						}
-					else if (btn == 4 || btn == 7 || btn == 10 || btn == 13){
-							property.style.backgroundColor='rgb(142, 68, 173)';
-							listening = true; 
-						}
-			   }
-				else {
-						property.style.backgroundColor = "#f1c40f";
-						listening = true; 
-				}
-		}
-		function reload() {
-			location.reload();
-		}
-	</script>
 	<div class="row clearfix">
 		<div class="col-md-1 column">
 			</div>
 		<div class="col-md-2 column">
-			<button type="button" onclick="getRandom(2)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Easy</button>
+			<button type="button" class="btn btn-default difficulty" id="easy" style="min-width:100%; min-height:50% !important;">Easy</button>
 		</div>
 		<div class="col-md-2 column">
-			<button type="button" onclick="getRandom(3)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Medium</button>
+			<button type="button" class="btn btn-default difficulty" id="medium" style="min-width:100%; min-height:50% !important;">Medium</button>
 		</div>
 		<div class="col-md-2 column">
-			<button type="button" onclick="getRandom(4)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Hard</button>
+			<button type="button" class="btn btn-default difficulty" id="hard" style="min-width:100%; min-height:50% !important;">Hard</button>
 		</div>
 		<div class="col-md-2 column">
-			<button type="button" onclick="getRandom(6)" class="btn btn-default" id="start" style="min-width:100%; min-height:50% !important;">Just Stop</button>
+			<button type="button" class="btn btn-default difficulty" id="stop" style="min-width:100%; min-height:50% !important;">Just Stop</button>
 		</div>
 		<div class="col-md-2 column">
-			<button type="button" onclick="reload()" class="btn btn-default" id="reset" style="min-width:100%; min-height:50% !important;">Reset</button>
+			<button type="button" class="btn btn-default difficulty" id="reset" style="min-width:100%; min-height:50% !important;">Reset</button>
 		</div>
 
 	</div>
 	<div id="theButtons">
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="1" style="background-color:#2980b9">1</button>
+			 <button type="button" class="btn btn-default" id="1" style="background-color:#2980b9"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="2" style="background-color:#c0392b">2</button>
+			 <button type="button" class="btn btn-default" id="2" style="background-color:#c0392b"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="3" style="background-color:#27ae60">3</button>
+			 <button type="button" class="btn btn-default" id="3" style="background-color:#27ae60"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="4" style="background-color:#8e44ad">4</button>
-		</div>
-	</div>
-	<div class="row clearfix">
-		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="5" style="background-color:#c0392b">5</button>
-		</div>
-		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="6" style="background-color:#27ae60">6</button>
-		</div>
-		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="7" style="background-color:#8e44ad">7</button>
-		</div>
-		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="8" style="background-color:#2980b9">8</button>
+			 <button type="button" class="btn btn-default" id="4" style="background-color:#8e44ad"></button>
 		</div>
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="9" style="background-color:#27ae60">9</button>
+			 <button type="button" class="btn btn-default" id="5" style="background-color:#c0392b"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="10" style="background-color:#8e44ad">10</button>
+			 <button type="button" class="btn btn-default" id="6" style="background-color:#27ae60"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="11" style="background-color:#2980b9">11</button>
+			 <button type="button" class="btn btn-default" id="7" style="background-color:#8e44ad"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="12" style="background-color:#c0392b">12</button>
+			 <button type="button" class="btn btn-default" id="8" style="background-color:#2980b9"></button>
+		</div>
+	</div>
+	<div class="row clearfix">
+		<div class="col-md-3 column">
+			 <button type="button" class="btn btn-default" id="9" style="background-color:#27ae60"></button>
+		</div>
+		<div class="col-md-3 column">
+			 <button type="button" class="btn btn-default" id="10" style="background-color:#8e44ad"></button>
+		</div>
+		<div class="col-md-3 column">
+			 <button type="button" class="btn btn-default" id="11" style="background-color:#2980b9"></button>
+		</div>
+		<div class="col-md-3 column">
+			 <button type="button" class="btn btn-default" id="12" style="background-color:#c0392b"></button>
 		</div>
 	</div>
 		<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="13" style="background-color:#8e44ad">13</button>
+			 <button type="button" class="btn btn-default" id="13" style="background-color:#8e44ad"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="14" style="background-color:#2980b9">14</button>
+			 <button type="button" class="btn btn-default" id="14" style="background-color:#2980b9"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="15" style="background-color:#c0392b">15</button>
+			 <button type="button" class="btn btn-default" id="15" style="background-color:#c0392b"></button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="16" style="background-color:#27ae60">16</button>
+			 <button type="button" class="btn btn-default" id="16" style="background-color:#27ae60"></button>
 		</div>
 	</div>
 	</div>
