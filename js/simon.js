@@ -8,6 +8,7 @@ var button = [];
 
 $( document ).ready(function() {
 
+
 	$(".difficulty").click( function() {
 		var difficulty = $(this).attr('id');
 		switch( difficulty ) {
