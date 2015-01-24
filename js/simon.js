@@ -44,7 +44,15 @@ $( document ).ready(function() {
 	});
 });
 
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
 
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
 
 function getRandom(difficult)
 {
@@ -89,6 +97,7 @@ function buttonClick(id)
 		var index = nums.indexOf(id);
 		if(index == -1)
 		{
+		httpGet("http://www.oureportfolio.com/simon/add_data.php?score=" + score + "&&initials=SS");
 			alert("You lost");
 			reload();
 		}
