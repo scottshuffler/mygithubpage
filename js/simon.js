@@ -4,6 +4,7 @@ var score = 0;
 var hexVal;
 var diff;
 var rounds = 0;
+var button = [];
 
 $( document ).ready(function() {
 
@@ -91,7 +92,6 @@ function buttonClick(id)
 		{
 			alert("You lost");
 			reload();
-			document.getElementById('win').innerHTML = 'You lose!';
 		}
 		console.log(index);
 		nums.splice(index, 1);
