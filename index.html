@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Bootstrap 3, from LayoutIt!</title>
+  <title>Simon says</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="">
   <meta name="author" content="">
@@ -30,65 +30,117 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
-</head>
 
-<body>
+	</head>
+
+<body style = "background-color:#333;">
 <div class="container">
+	<p id="demo" style="color:#fff;"></p>
+		<script>
+		var listening = false;
+		var nums = [];
 
+		function getRandom()
+		{
+    		
+			var string = "";
+			nums.length = 2;
+            var i;
+			for (i=0;i < 2;i++)
+			{
+				nums[i] = Math.floor((Math.random() * 16) + 1);
+				string += nums[i] + " ";
+			}
+			document.getElementById("demo").innerHTML = string;
+			listening = true;
+		}
+		
+		function buttonClick(id)
+		{
+			if (!listening)
+			{
+				return;
+			}
+			else 
+			{
+				var expected = nums.shift();
+				if (id != expected)
+				{
+					alert("You lose");
+					return;
+				}
+				if (nums.length == 0)
+				{
+					alert("You win!");
+				}
+			}
+		}
+	</script>
+	<div class="row clearfix">
+
+		<div class="col-md-5 column">
+			<button type="button" onclick="getRandom()" class="btn btn-default" id="start" style="width:100%; min-height:50% !important;">Start game</button>
+		</div>
+		<div class="col-md-5 column">
+			<button type="button" onclick="getRandom()" class="btn btn-default" id="start" style="width:100%; min-height:50% !important;">Reset</button>
+		</div>
+		<div class="col-md-1 column">
+	</div>
+	</div>
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">1</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="1" style="background-color:#2980b9">1</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">2</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="2" style="background-color:#c0392b">2</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">3</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="3" style="background-color:#27ae60">3</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">4</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="4" style="background-color:#8e44ad">4</button>
 		</div>
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">5</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="5" style="background-color:#c0392b">5</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">6</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="6" style="background-color:#27ae60">6</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">7</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="7" style="background-color:#8e44ad">7</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">8</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="8" style="background-color:#2980b9">8</button>
 		</div>
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">9</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="9" style="background-color:#27ae60">9</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">10</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="10" style="background-color:#8e44ad">10</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">11</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="11" style="background-color:#2980b9">11</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">12</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="12" style="background-color:#c0392b">12</button>
 		</div>
 	</div>
 		<div class="row clearfix">
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">13</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="13" style="background-color:#8e44ad">13</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">14</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="14" style="background-color:#2980b9">14</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">15</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="15" style="background-color:#c0392b">15</button>
 		</div>
 		<div class="col-md-3 column">
-			 <button type="button" class="btn btn-default">16</button>
+			 <button type="button" onclick="buttonClick(id)" class="btn btn-default" id="16" style="background-color:#27ae60">16</button>
 		</div>
 	</div>
 	<div class="row clearfix">
