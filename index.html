@@ -39,20 +39,38 @@
 		<script>
 		var listening = false;
 		var nums = [];
-
+		var hexVal;
 		function getRandom()
 		{
     		
 			var string = "";
-			nums.length = 2;
             var i;
+			
 			for (i=0;i < 2;i++)
 			{
-				nums[i] = Math.floor((Math.random() * 16) + 1);
-				string += nums[i] + " ";
+				(function (i) {
+					nums.push(Math.floor((Math.random() * 16) + 1));
+					string += nums[i] + " ";
+					setTimeout(function () {
+						displayColors(i);
+					}, 2000);
+				}(i));	
 			}
 			document.getElementById("demo").innerHTML = string;
 			listening = true;
+
+		}
+		
+		function displayColors(x)
+		{
+			x = x;
+			setColor(nums[x]);
+			if (x <= 3)
+			{
+				setTimeout(function () {
+						setColor(nums[x]);
+					}, 2000);
+			}
 		}
 		
 		function buttonClick(id)
@@ -63,17 +81,76 @@
 			}
 			else 
 			{
+				if (nums.length==0)
+				{
+					alert("You win");
+				}
+				var i;
+				var isThere = false;
+				alert(nums.length);
+				for (i=0;i<nums.length;i++)
+				{
+					if (nums[i]==id)
+					{
+						nums.splice(i, 1);
+						isThere = true;
+					}
+				}
+				if (!isThere)
+				{
+					alert("You lose.");
+				}
+				
+				/*alert(nums.indexOf(id));
+				if (n == -1)
+				{
+					alert("You lose");
+				}
+				else if(nums.length == 0) 
+				{
+					alert("You win!");
+				}
+				else{
+					nums.splice(id, 1);
+				}
 				var expected = nums.shift();
 				if (id != expected)
 				{
 					alert("You lose");
-					return;
 				}
 				if (nums.length == 0)
 				{
 					alert("You win!");
-				}
+				}*/
 			}
+		}
+		function setColor(btn){
+			var property=document.getElementById(btn);
+			   if (window.getComputedStyle(property).backgroundColor == 'rgb(241, 196, 15)') {
+					if (btn == 2 || btn == 5 || btn == 12 || btn == 15)
+						{
+							property.style.backgroundColor='rgb(192, 57, 43)';
+						}
+					else if (btn == 1 || btn == 8 || btn == 11 || btn == 14)
+						{
+							property.style.backgroundColor='rgb(41, 128, 185)';
+						}
+					else if (btn == 3 || btn == 6 || btn == 9 || btn == 16)
+						{
+							property.style.backgroundColor='rgb(39, 174, 96)';
+						}
+					else{
+							property.style.backgroundColor='rgb(142, 68, 173)';
+						}
+			   }
+				else {
+						
+						hexVal = window.getComputedStyle(property).backgroundColor;
+						property.style.backgroundColor = "#f1c40f";
+				}
+		}
+		function reload() {
+			location.reload();
 		}
 	</script>
 	<div class="row clearfix">
@@ -82,7 +159,7 @@
 			<button type="button" onclick="getRandom()" class="btn btn-default" id="start" style="width:100%; min-height:50% !important;">Start game</button>
 		</div>
 		<div class="col-md-5 column">
-			<button type="button" onclick="getRandom()" class="btn btn-default" id="start" style="width:100%; min-height:50% !important;">Reset</button>
+			<button type="button" onclick="reload()" class="btn btn-default" id="reset" style="width:100%; min-height:50% !important;">Reset</button>
 		</div>
 		<div class="col-md-1 column">
 	</div>
